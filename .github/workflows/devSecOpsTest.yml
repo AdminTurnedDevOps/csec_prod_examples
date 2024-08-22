@@ -37,7 +37,7 @@ jobs:
       #run: snyk code test webappsfortesting/pyweb --org=${{ secrets.snykOrg }}
 
     - name: Build a Docker image
-      run: docker build -t gowebapi /webappsfortesting/gowebapi/Dockerfile
+      run: docker build -t gowebapi -f webappsfortesting/gowebapi/Dockerfile
       # Runs Snyk Container (Container and SCA) analysis and uploads result to Snyk.
     - name: Snyk Container monitor
       run: snyk container test gowebapi --file=webappsfortesting/gowebapi/Dockerfile
