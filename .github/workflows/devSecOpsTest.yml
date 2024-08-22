@@ -19,19 +19,21 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
-#### CodeQL ####
 
-    # Initializes the CodeQL tools for scanning.
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v1
+    - name: "Run analysis"
+      uses: ossf/scorecard-action@0864cf19026789058feabb7e87baa5f140aac736 # v2.3.1
       with:
-        languages: go, python
+        results_file: results.sarif
+        results_format: sarif
+        # Public repositories:
+        #   - Publish results to OpenSSF REST API for easy access by consumers
+        #   - Allows the repository to include the Scorecard badge.
+        #   - See https://github.com/ossf/scorecard-action#publishing-results.
+        # For private repositories:
+        #   - `publish_results` will always be set to `false`, regardless
+        #     of the value entered here.
+        publish_results: true
 
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v1
-
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v1
 
 
 #### SNYK TESTING #####
