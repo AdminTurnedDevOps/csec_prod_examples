@@ -27,6 +27,9 @@ jobs:
 
       # Notice how the org is a GitHub Action Secret. This is to ensure no "secrets" are exposed in plain text.
       # If you want the results to be sent to the Snyk Dashboard for constant monitoring, you can use `snyk monitor` instead.
+    - name: Snyk Auth
+      run: snyk auth ${{ secrets.snykToken }}
+    
     - name: Snyk SCA
       run: snyk test webappsfortesting/gowebapi --org=${{ secrets.snykOrg }}
 
