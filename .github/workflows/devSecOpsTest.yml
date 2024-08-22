@@ -19,13 +19,28 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - name: Set up Snyk CLI to check for security issues
-      uses: snyk/actions/setup@806182742461562b67788a64410098c9d9b96adb
+#### CodeQL ####
+
+    # Initializes the CodeQL tools for scanning.
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v1
+      with:
+        languages: go, python
+
+    - name: Autobuild
+      uses: github/codeql-action/autobuild@v1
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v1
+
 
 #### SNYK TESTING #####
 
       # Notice how the Org and Snyk Token is a GitHub Action Secret. This is to ensure no "secrets" are exposed in plain text.
       # If you want the results to be sent to the Snyk Dashboard for constant monitoring, you can use `snyk monitor` instead.
+    - name: Set up Snyk CLI to check for security issues
+      uses: snyk/actions/setup@806182742461562b67788a64410098c9d9b96adb
+    
     - name: Snyk Auth
       run: snyk auth ${{ secrets.snykToken }}
     
