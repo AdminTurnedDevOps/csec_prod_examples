@@ -43,31 +43,31 @@ jobs:
 
       
 
-    - name: Install kubectl
-      run: |
-        curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-        curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
-        echo "$(<kubectl.sha256) kubectl" | sha256sum --check
+    # - name: Install kubectl
+    #   run: |
+    #     curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    #     curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+    #     echo "$(<kubectl.sha256) kubectl" | sha256sum --check
 
-        sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+    #     sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
         
-        kubectl version --client
+    #     kubectl version --client
     
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v1
+    # - name: Setup Terraform
+    #   uses: hashicorp/setup-terraform@v1
     
-    - name: Terraform Init
-      working-directory: aks
-      run: terraform init
+    # - name: Terraform Init
+    #   working-directory: aks
+    #   run: terraform init
            
-    - name: Terraform Format
-      working-directory: aks
-      run: terraform fmt
+    # - name: Terraform Format
+    #   working-directory: aks
+    #   run: terraform fmt
     
-    - name: Terraform Plan
-      working-directory: aks
-      run: terraform plan
+    # - name: Terraform Plan
+    #   working-directory: aks
+    #   run: terraform plan
     
-    - name: Terraform Apply
-      working-directory: aks
-      run: terraform apply -auto-approve
+    # - name: Terraform Apply
+    #   working-directory: aks
+    #   run: terraform apply -auto-approve
