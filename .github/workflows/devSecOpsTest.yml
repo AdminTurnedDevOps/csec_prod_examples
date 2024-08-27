@@ -48,7 +48,7 @@ jobs:
 
     - name: Snyk SCA Python
       run: |
-        pip3 install -r webappsfortesting/requirements.txt
+        pip3 install -r webappsfortesting/pyweb/requirements.txt
         snyk test webappsfortesting/gowebapi --org=${{ secrets.snykOrg }}
 
     - name: Snyk SAST
