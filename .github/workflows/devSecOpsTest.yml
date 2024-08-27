@@ -20,18 +20,16 @@ jobs:
       uses: actions/checkout@v4
 
 
+    #### Scorecard ####
+      # Scorecard is a way to help improve security practices. It's an automated tool that
+      # assesses a number of important heuristics ("checks") associated with software security and assigns each check a score of 0-10.
+      # The checks are found here: https://github.com/ossf/scorecard?tab=readme-ov-file#scorecard-checks
+
     - name: "Run analysis"
       uses: ossf/scorecard-action@0864cf19026789058feabb7e87baa5f140aac736 # v2.3.1
       with:
         results_file: results.sarif
         results_format: sarif
-        # Public repositories:
-        #   - Publish results to OpenSSF REST API for easy access by consumers
-        #   - Allows the repository to include the Scorecard badge.
-        #   - See https://github.com/ossf/scorecard-action#publishing-results.
-        # For private repositories:
-        #   - `publish_results` will always be set to `false`, regardless
-        #     of the value entered here.
         publish_results: true
 
 
@@ -46,8 +44,13 @@ jobs:
     - name: Snyk Auth
       run: snyk auth ${{ secrets.snykToken }}
     
-    - name: Snyk SCA
+    - name: Snyk SCA Go
       run: snyk test webappsfortesting/gowebapi --org=${{ secrets.snykOrg }}
+
+    - name: Snyk SCA Python
+      run: |
+        pip3 install -r webappsfortesting/requirements.txt
+        snyk test webappsfortesting/gowebapi --org=${{ secrets.snykOrg }}
 
     - name: Snyk SAST
       run: snyk code test webappsfortesting/gowebapi --org=${{ secrets.snykOrg }}
@@ -58,6 +61,8 @@ jobs:
       run: docker build -t gowebapi .
     - name: Snyk Container monitor
       run: snyk container test gowebapi --file=webappsfortesting/gowebapi/Dockerfile
+
+      # Add abililty to test the container image with Snyk
 
 
       
